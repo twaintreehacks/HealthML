@@ -22,10 +22,3 @@ shuffle(data)
 
 trainingData = data[:200]
 testData = data[200:]
-
-
-
-
-
-
-
