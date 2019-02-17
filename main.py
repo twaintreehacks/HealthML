@@ -1,6 +1,7 @@
 import keras as k
 import numpy as np
 from random import shuffle
+import matplotlib.pyplot as plt
 
 file = open("heart.csv", "r")
 first = True
@@ -54,11 +55,29 @@ model = k.models.Sequential([
     k.layers.Activation('softmax')
 ])
 
+k.utils.plot_model(model, to_file='model.png')
+
 model.compile(optimizer='rmsprop',
-              loss='binary_crossentropy',
+              loss='categorical_crossentropy',
               metrics=['accuracy'])
 
-model.fit(np.array(trainingVals), np.array(trainingResults), epochs=20, batch_size=8)
+history = model.fit(np.array(trainingVals), np.array(trainingResults), epochs=20, batch_size=16)
 print(model.predict(np.array(testVals)))
 print(testResults)
 print(model.evaluate(np.array(testVals), np.array(testResults)))
+
+print(history.history)
+
+plt.plot(history.history['acc'])
+plt.title('Model accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Accuracy'], loc='upper left')
+plt.show()
+
+plt.plot(history.history['loss'])
+plt.title('Model Loss')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend(['Accuracy'], loc='upper left')
+plt.show()
