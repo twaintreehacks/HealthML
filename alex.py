@@ -1,11 +1,12 @@
 import tensorflow as tf
 import keras as k
 import numpy as np
+from tensorflow.keras import layers
 from random import shuffle
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 file = open("heart.csv", "r")
+firstLine = True
 data = []
 characteristics = []
 
@@ -47,18 +48,14 @@ for elem in testingSamples:
     else:
         testingResults.append([0, 1])
 
-model = k.models.Sequential([
-    k.layers.Dense(64, input_dim = len(trainingValues[0])),
-    k.layers.Activation('tanh'),
-    k.layers.Dense(2),
-    k.layers.Activation('sigmoid'),
-])
-
+model = tf.keras.Sequential()
+model.add(layers.Dense(64, input_dim = len(trainingValues[0]), activation = 'tanh'))
+model.add(layers.Dense(2, activation = 'sigmoid'))
 model.compile(optimizer='rmsprop',
               loss='binary_crossentropy',
               metrics=['accuracy'])
 
-history = model.fit(np.array(trainingValues), np.array(trainingResults), epochs=310, batch_size=7)
+history = model.fit(np.array(trainingValues), np.array(trainingResults), epochs=300, batch_size=7)
 
 plt.plot(history.history['acc'])
 plt.title('Heart Disease Model Accuracy')
