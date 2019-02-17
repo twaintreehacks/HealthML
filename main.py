@@ -53,8 +53,3 @@ model.fit(np.array(trainingVals), np.array(trainingResults), epochs=10, batch_si
 
 print(model.predict(np.array(testVals)))
 print(testResults)
-
-
-
-
-
