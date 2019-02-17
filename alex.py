@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 file = open("heart.csv", "r")
-firstLine = True
 data = []
 characteristics = []
 
